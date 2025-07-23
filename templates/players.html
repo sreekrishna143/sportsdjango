@@ -1,0 +1,120 @@
+{% extends 'navbar.html' %}
+{% load static %}
+{% block body %}
+<html lang="en">
+
+<head>
+  <title>Soccer &mdash; Website</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<style>
+.cards{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    padding: 20px;
+    grid-gap: 40px;
+}
+.card{
+    background-color: #1c1b29;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.18);
+}
+.container{
+    position: relative;
+}
+
+img{
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 20px 20px 0 0;
+}
+.card1>.container:after{
+    background-image: linear-gradient(
+        135deg,
+        #0100ec,
+        #fb36f4
+    );
+}
+.card2>.container:after{
+    background-image: linear-gradient(
+        135deg,
+        #2bdce3,
+        #42ffdb
+    );
+}
+.card3>.container:after{
+    background-image: linear-gradient(
+        135deg,
+        #ffab1d,
+        #f8501c
+    );
+}
+.details{
+    padding: 20px 10px;
+}
+.details>h3{
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 18px;
+    margin: 10px 0 15px 0;
+}
+.details>p{
+    color: #a0a0a0;
+    font-size: 15px;
+    line-height: 30px;
+    font-weight: 400;
+}
+.team-heading {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 40px;
+    color: white;
+}
+
+</style>
+</head>
+
+<body>
+
+  <div class="site-wrap">
+
+     <div class="hero overlay" style="background-image: url('{% static 'images/bg_3.jpg' %}');">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-9 mx-auto text-center">
+            <h1 class="text-white">Players</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-4">
+        <a href="{% url 'add_player' %}" class="btn btn-primary mb-3">Add Player</a>
+        {% for country, players in grouped_players.items %}
+            <h2 class="team-heading">{{ country }}</h2>
+            <div class="cards">
+                {% for player in players %}
+                    <div class="card">
+                        <div class="container">
+                            <img src="{{ player.image.url }}" alt="{{ player.name }}">
+                        </div>
+                        <div class="details">
+                            <h3>{{ player.name }}</h3>
+                            <p>{{ player.description }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+
+  </div>
+
+
+{% include 'footer.html' %}
+</body>
+
+</html>
+{% endblock %}
